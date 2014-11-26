@@ -20,16 +20,20 @@ import com.google.android.gms.wearable.Wearable;
 public class HandheldActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, MessageApi.MessageListener{
 
     private GoogleApiClient mGoogleApiClient;
-    private final String TAG = HandheldActivity.class.getName();
+    private final String TAG = "handheld";
    // private String mNode;
     private TextView value;
+    private MainView mMainview;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_handheld);
+
+        //setContentView(R.layout.activity_handheld);
+        setContentView(new MainView(this));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 
         value = (TextView)findViewById(R.id.valueLabel);
 
@@ -95,6 +99,15 @@ public class HandheldActivity extends ActionBarActivity implements GoogleApiClie
     public void onMessageReceived(MessageEvent event) {
 
         final String message = event.getPath();
+        Log.d(TAG, message);
+        if (message == "PUNCH"){
+            mMainview.punch();
+        }else if(message == "UPPER") {
+            mMainview.upper();
+        }else if(message == "HOOK"){
+            mMainview.hook();
+        }
+
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {

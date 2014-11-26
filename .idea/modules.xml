@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Tekken.iml" filepath="$PROJECT_DIR$/Tekken.iml" />
       <module fileurl="file://$PROJECT_DIR$/TekkenForWear.iml" filepath="$PROJECT_DIR$/TekkenForWear.iml" />
       <module fileurl="file://$PROJECT_DIR$/Wearable/Wearable.iml" filepath="$PROJECT_DIR$/Wearable/Wearable.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
