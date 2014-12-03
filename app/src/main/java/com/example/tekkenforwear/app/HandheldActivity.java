@@ -25,6 +25,8 @@ public class HandheldActivity extends ActionBarActivity implements GoogleApiClie
     private TextView value;
     private MainView mMainview;
 
+    //fukuta
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

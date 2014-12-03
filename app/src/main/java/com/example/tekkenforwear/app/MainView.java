@@ -14,8 +14,9 @@ import android.view.SurfaceView;
 import android.widget.TextView;
 
 /**
- * Created by fukuta0614 on 11/26/14.
+ * Created by kawajiri on 11/26/14.
  */
+
 public class MainView extends SurfaceView implements SurfaceHolder.Callback {
 
     int action = 0;
