@@ -31,37 +31,16 @@ public class HandheldActivity extends ActionBarActivity implements GoogleApiClie
         super.onCreate(savedInstanceState);
 
         //setContentView(R.layout.activity_handheld);
-        setContentView(new MainView(this));
+        mMainview = new MainView(this);
+        setContentView(mMainview);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
-        value = (TextView)findViewById(R.id.valueLabel);
+//        value = (TextView)findViewById(R.id.valueLabel);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Wearable.API)
-//                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-//                    @Override
-//                    public void onConnected(Bundle bundle) {
-//                        Log.d(TAG, "onConnected");
-//
-////                        NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(mGoogleApiClient).await();
-//                        Wearable.NodeApi.getConnectedNodes(mGoogleApiClient).setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
-//                            @Override
-//                            public void onResult(NodeApi.GetConnectedNodesResult nodes) {
-//                                //Nodeは１個に限定
-//                                if (nodes.getNodes().size() > 0) {
-//                                    mNode = nodes.getNodes().get(0).getId();
-//                                }
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onConnectionSuspended(int i) {
-//                        Log.d(TAG, "onConnectionSuspended");
-//
-//                    }
-//                })
+
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
@@ -99,23 +78,22 @@ public class HandheldActivity extends ActionBarActivity implements GoogleApiClie
     public void onMessageReceived(MessageEvent event) {
 
         final String message = event.getPath();
-        Log.d(TAG, message);
-        if (message == "PUNCH"){
+//        Log.d(TAG, message);
+
+        if (message.equals("PUNCH")){
             mMainview.punch();
-        }else if(message == "UPPER") {
+        }else if(message.equals("UPPER")) {
             mMainview.upper();
-        }else if(message == "HOOK"){
+        }else if(message.equals("HOOK")){
             mMainview.hook();
         }
-
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                value.setText(message);
-            }//public void run() {
-        });
-
-        Log.d(TAG,event.getPath());
+//
+//        this.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+////                value.setText(message);
+//            }//public void run() {
+//        });
 
     }
     @Override
