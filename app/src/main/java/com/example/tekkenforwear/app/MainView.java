@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import java.util.Random;
 
 /**
  * Created by ratta on 11/26/14.
@@ -19,7 +20,8 @@ import android.widget.TextView;
 
 public class MainView extends SurfaceView implements SurfaceHolder.Callback {
 
-    int action = 0;
+    int action_my = 0;
+    int action_opponent = 0;
     int counter_r,counter_l = 0;
     boolean canRun = true;
     private final String TAG = "handheld";
@@ -33,14 +35,14 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback {
         mHandler.sendEmptyMessageDelayed(0, 10);
     }
 
-    public void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas){
         ///////////////////////background////////////////////
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.tekkenbackground);
         bm = Bitmap.createScaledBitmap(bm, getWidth(), getHeight(), true);
         //////////////////////character////////////////////////
-        Bitmap muzi = BitmapFactory.decodeResource(getResources(), R.drawable.muzi);
+        Bitmap paul_normal = BitmapFactory.decodeResource(getResources(), R.drawable.normal_paul);
         Bitmap jayg = BitmapFactory.decodeResource(getResources(), R.drawable.jayg);
-        muzi = Bitmap.createScaledBitmap(muzi, getWidth() / 5, getHeight() / 4, true);
+        paul_normal = Bitmap.createScaledBitmap(paul_normal, getWidth() / 5, getHeight() / 4, true);
         jayg = Bitmap.createScaledBitmap(jayg, getWidth() / 5, getHeight() / 4, true);
         //////////////////////energy bar///////////////////////////
 
@@ -83,27 +85,28 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback {
         gameover = Bitmap.createScaledBitmap(gameover, getWidth() , getHeight() / 2, true);
 
         ////////////////////////////////punch///////////////////
-        Bitmap punch_toright = BitmapFactory.decodeResource(getResources(),R.drawable.punch_toright);
-        punch_toright = Bitmap.createScaledBitmap(punch_toright, getWidth()/6, getHeight()/6, true);
+        Bitmap paul_punch = BitmapFactory.decodeResource(getResources(),R.drawable.punch);
+        paul_punch = Bitmap.createScaledBitmap(paul_punch, getWidth()/5, getHeight()/4, true);
         ////////////////////////////////hook////////////////////
-        Bitmap hook_toright = BitmapFactory.decodeResource(getResources(), R.drawable.hook_toright);
-        hook_toright = Bitmap.createScaledBitmap(hook_toright, getWidth()/6, getHeight()/6, true);
+        Bitmap paul_hook = BitmapFactory.decodeResource(getResources(), R.drawable.hook);
+        paul_hook = Bitmap.createScaledBitmap(paul_hook, getWidth()/5, getHeight()/4, true);
         ////////////////////////////////upper/////////////////
-        Bitmap upper_toright = BitmapFactory.decodeResource(getResources(),R.drawable.upper_toright);
-        upper_toright = Bitmap.createScaledBitmap(upper_toright, getWidth()/6, getHeight()/6, true);
-
+        Bitmap paul_upper = BitmapFactory.decodeResource(getResources(),R.drawable.upper);
+        paul_upper = Bitmap.createScaledBitmap(paul_upper, getWidth()/5, getHeight()/4, true);
+/*
         int bw = bm.getWidth();  ///background width
         int bh = bm.getHeight();
         int mw = muzi.getWidth(); ///muzi's width
         int mh = muzi.getHeight();
         int jw = jayg.getWidth(); ///jayg's width
         int jh = jayg.getHeight();
-
+*/
 ////////////////////////////////////////////draw pictures /////////////////////////////////////////////////
         canvas.drawColor(Color.BLACK);
         canvas.drawBitmap(bm, 0, 0, null);
-        canvas.drawBitmap(muzi, 1200, 500, null);
-        canvas.drawBitmap(jayg, 300, 500, null);
+        canvas.drawBitmap(jayg, 1200, 500, null);
+        canvas.drawBitmap(paul_normal, 300, 500, null);
+
         /////////energybar method////////
 
         switch(counter_r) {
@@ -167,15 +170,27 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         /////////////////////combat method////////////////////
-        if (action == 1) {
-            canvas.drawBitmap(upper_toright,300,500,null);
-
-        }else if(action == 2) {
-            canvas.drawBitmap(hook_toright,300,500,null);
-        }else if (action == 3) {
-            canvas.drawBitmap(punch_toright,300,500,null);
+        /////combat me//////
+        if (action_my== 1) {
+            canvas.drawBitmap(paul_punch,300,500,null);
+        }else if(action_my == 2) {
+            canvas.drawBitmap(paul_hook,300,500,null);
+        }else if (action_my == 3) {
+            canvas.drawBitmap(paul_upper,300,500,null);
         }
-
+        /////combat opponent
+/*
+        if (action_opponent == 1) {
+            //canvas.drawBitmap(upper_toright,300,500,null);
+            counter_l++;
+        }else if(action_opponent == 2) {
+            //canvas.drawBitmap(hook_toright,300,500,null);
+            counter_l++;
+        }else if (action_opponent == 3) {
+            //canvas.drawBitmap(punch_toright,300,500,null);
+            counter_l++;
+        }
+*/
     }
 
 
@@ -202,19 +217,36 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
     }
+    /////////function for opponent's random attack//////////
+    public void main(String[] args){
+            Random generator = new Random();
+            int num ;
+            num= generator.nextInt(3) + 1;////random number from 1-3
+            action_opponent = num;
+
+            if(action_opponent == 1){
+                counter_l++;
+            }else if(action_opponent == 2){
+                counter_l++;
+            }else if(action_opponent == 3){
+                counter_l++;
+            }
+        }
+
 
     public void punch(){
-        action = 1;
-        counter_l++;
+        action_my = 1;
+        counter_r++;
         Log.d(TAG, "punch");
     }
     public void upper(){
-        action = 2;
-        counter_l++;
+        action_my = 3;
+        counter_r++;
         Log.d(TAG, "upper");
     }
     public void hook(){
-        action = 3;
+        action_my = 2;
+        counter_r++;
         Log.d(TAG, "hook");
 
     }
