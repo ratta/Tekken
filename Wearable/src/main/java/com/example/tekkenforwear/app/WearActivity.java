@@ -28,6 +28,7 @@ public class WearActivity extends Activity implements SensorEventListener {
     private final String TAG = WearActivity.class.getName();
     private String mNode;
     private final String[] SEND_MESSAGES = {"NOTHING", "PUNCH", "UPPER", "HOOK"};
+    private int send_delay = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,14 +113,15 @@ public class WearActivity extends Activity implements SensorEventListener {
         //if (mTextView2 != null) mTextView2.setText(String.valueOf(detect(x,y,z)));
         int motion;
         motion = detect(x,y,z);
-
+        if (send_delay > 0) send_delay = 0;
 
         //count++;
-        if (motion > 0 && mNode != null ) {
+        if (motion > 0 && mNode != null && send_delay == 0) {
 //                MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(mGoogleApiClient, mNode, SEND_MESSAGES[motion], null).await();
 //                if (!result.getStatus().isSuccess()) {
 //                    Log.d(TAG, "ERROR : failed to send Message" + result.getStatus());
 //                }
+            send_delay = 10;
             Wearable.MessageApi.sendMessage(mGoogleApiClient, mNode, SEND_MESSAGES[motion]/*String.format("X : %f\nY : %f\nZ : %f\n",x, y, z)*/, null).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
                 @Override
                 public void onResult(MessageApi.SendMessageResult result) {

@@ -20,7 +20,7 @@ import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Wearable;
 
 
-public class HandheldActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, MessageApi.MessageListener{
+public class HandheldActivity extends Activity implements GoogleApiClient.ConnectionCallbacks, MessageApi.MessageListener{
 
     private GoogleApiClient mGoogleApiClient;
     private final String TAG = "handheld";

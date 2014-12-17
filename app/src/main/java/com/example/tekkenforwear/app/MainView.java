@@ -98,11 +98,11 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
 
         /////////energybar method////////
 
-        energy_rect_l_src.set(HP_length * damage_l / 20, 0, HP_length, height/5);
-        energy_rect_l_dst.set(HP_length * damage_l / 20, 0, HP_length, height/5);
+        energy_rect_l_src.set(HP_length * damage_l / 20, 0, HP_length, height/6);
+        energy_rect_l_dst.set(HP_length * damage_l / 20, 0, HP_length, height/6);
 
-        energy_rect_r_src.set(0, 0, HP_length - HP_length * damage_r / 20, height/5);
-        energy_rect_r_dst.set(width - HP_length,0,width - HP_length * damage_r / 20,height/5);
+        energy_rect_r_src.set(0, 0, HP_length - HP_length * damage_r / 20, height/6);
+        energy_rect_r_dst.set(width - HP_length,0,width - HP_length * damage_r / 20,height/6);
         if (status_l == 1) canvas.drawBitmap(energy_l, energy_rect_l_src, energy_rect_l_dst, null);
         if (status_r == 1) canvas.drawBitmap(energy_r, energy_rect_r_src, energy_rect_r_dst, null);
         if(block_l == 1) canvas.drawBitmap(shield, width/2 - 216 , 0, null);
@@ -140,56 +140,36 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
         /////combat me//////
         switch(action_my) {
             case 0:
-                canvas.drawBitmap(paul_normal, width / 4, height - height / 3, null);
+                canvas.drawBitmap(paul_normal, width / 4, 4 * height / 7, null);
                 break;
             case 1:
-                canvas.drawBitmap(paul_punch, width / 4, height - height / 3, null);
-
-                if (PUNCH_DELAY == 0) {
-                    PUNCH_DELAY = 10;
-                }
+                canvas.drawBitmap(paul_punch, width / 4, 4 * height / 7, null);
+                PUNCH_DELAY = 10;
                 break;
             case 2:
-                canvas.drawBitmap(paul_upper, width / 4, height - height / 3, null);
-
-                if (UPPER_DELAY == 0) {
-                    UPPER_DELAY = 10;
-                }
+                canvas.drawBitmap(paul_upper, width / 4, 4 * height / 7, null);
+                UPPER_DELAY = 10;
                 break;
             case 3:
-                canvas.drawBitmap(paul_hook, width / 4, height - height / 3, null);
-
-                if (HOOK_DELAY == 0) {
-                    HOOK_DELAY = 10;
-                }
+                canvas.drawBitmap(paul_hook, width / 4, 4 * height / 7, null);
+                HOOK_DELAY = 10;
                 break;
         }
 
         /////combat opponent
         switch(action_opponent) {
             case 0:
-                canvas.drawBitmap(ryu_normal, width / 2, height - height / 3, null);
+                canvas.drawBitmap(ryu_normal, 11 * width / 20, 4 * height / 7, null);
                 break;
             case 1:
-                canvas.drawBitmap(ryu_hook, width / 2, height - height / 3, null);
+                canvas.drawBitmap(ryu_hook,11 * width / 20,4 * height / 7, null);
 
-                if (PUNCH_DELAY == 0) {
-                    PUNCH_DELAY = 10;
-                }
                 break;
             case 2:
-                canvas.drawBitmap(ryu_upper, width / 2, height - height / 3, null);
-
-                if (UPPER_DELAY == 0) {
-                    UPPER_DELAY = 10;
-                }
+                canvas.drawBitmap(ryu_upper, 11 * width / 20, 4 * height / 7, null);
                 break;
             case 3:
-                canvas.drawBitmap(ryu_kick, width / 2, height - height / 3, null);
-
-                if (HOOK_DELAY == 0) {
-                    HOOK_DELAY = 10;
-                }
+                canvas.drawBitmap(ryu_kick, 11 * width / 20, 4 * height / 7, null);
                 break;
         }
 
@@ -216,20 +196,12 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
 
     /////////function for opponent's random attack//////////
     public void random(){
-            if (reset == 0 && action_my != 0){
+            if (reset == 0 ){
                 Random generator = new Random();
                 int num;
-                num = generator.nextInt(3) + 1;////random number from 1-3
-                action_opponent = num;
-/*
-                if (action_opponent == 1) {
-                    damage_l=damage_l+1;
-                } else if (action_opponent == 2) {
-                    damage_l=damage_l+2;
-                } else if (action_opponent == 3) {
-                    damage_l=damage_l+3;
-                }
-           */
+                num = generator.nextInt(75) + 1;////random number from 1-3
+                if (num < 4)
+                    action_opponent = num ;
            }
      }
     ///////////rock, paper, scissors!!///////
@@ -267,6 +239,7 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
 
     public void run(){
         while(mThread != null){
+            random();
             doDraw();
             if (PUNCH_DELAY > 0) PUNCH_DELAY -= 1;
             if (UPPER_DELAY > 0)  UPPER_DELAY -= 1;
@@ -281,22 +254,16 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
 
     public void punch(){
         action_my = 1;
-        random();
         check();
-        //damage_r=damage_r+3;
         Log.d(TAG, "punch");
     }
     public void hook(){
         action_my = 2;
-        //damage_r=damage_r+2;
-        random();
         check();
         Log.d(TAG, "hook");
     }
     public void upper(){
         action_my = 3;
-        //damage_r=damage_r+3;
-        random();
         check();
         Log.d(TAG, "upper");
 
