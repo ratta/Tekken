@@ -136,7 +136,3 @@ public class HandheldActivity extends ActionBarActivity implements GoogleApiClie
     }
 }
 
-class GetterSetter{
-
-    public static int reset = 0;
-}

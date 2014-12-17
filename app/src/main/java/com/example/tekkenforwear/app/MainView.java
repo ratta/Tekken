@@ -40,11 +40,15 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
     Resources res = this.getContext().getResources();
 
     Bitmap bm = BitmapFactory.decodeResource(res, R.drawable.tekkenbackground);
+    Bitmap ryu_normal = BitmapFactory.decodeResource(res, R.drawable.normal_ryu);
+    Bitmap ryu_upper = BitmapFactory.decodeResource(res, R.drawable.ryu_upper);
+    Bitmap ryu_kick = BitmapFactory.decodeResource(res, R.drawable.kick_ryu);
+    Bitmap ryu_hook = BitmapFactory.decodeResource(res, R.drawable.hook_ryu);
     Bitmap paul_normal = BitmapFactory.decodeResource(res, R.drawable.normal_paul);
     Bitmap paul_punch = BitmapFactory.decodeResource(res,R.drawable.punch);
     Bitmap paul_upper = BitmapFactory.decodeResource(res,R.drawable.upper);
     Bitmap paul_hook = BitmapFactory.decodeResource(res, R.drawable.hook);
-    Bitmap jayg = BitmapFactory.decodeResource(res, R.drawable.jayg);
+    //Bitmap jayg = BitmapFactory.decodeResource(res, R.drawable.jayg);
     Bitmap energy_r = BitmapFactory.decodeResource(res, R.drawable.energy_right);
     Bitmap energy_l = BitmapFactory.decodeResource(res, R.drawable.energy_left);
     Bitmap you_win = BitmapFactory.decodeResource(res, R.drawable.you_win);
@@ -71,7 +75,7 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
 
         bm = Bitmap.createScaledBitmap(bm, width, height, true);
         paul_normal = Bitmap.createScaledBitmap(paul_normal, width / 5, height / 4, true);
-        jayg = Bitmap.createScaledBitmap(jayg, width / 5, height / 4, true);
+        //jayg = Bitmap.createScaledBitmap(jayg, width / 5, height / 4, true);
         energy_l = Bitmap.createScaledBitmap(energy_l,HP_length,height/5,true);
         energy_r = Bitmap.createScaledBitmap(energy_r,HP_length,height/5,true);
         gameover = Bitmap.createScaledBitmap(gameover, width , height / 2, true);
@@ -81,11 +85,15 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
         paul_hook = Bitmap.createScaledBitmap(paul_hook, width/5, height/4, true);
         paul_upper = Bitmap.createScaledBitmap(paul_upper, width/5, height/4, true);
         shield = Bitmap.createScaledBitmap(shield, width/9, height/5, true);
+        ryu_normal = Bitmap.createScaledBitmap(ryu_normal, width / 5, height / 4, true);
+        ryu_kick = Bitmap.createScaledBitmap(ryu_kick, width / 5, height /4 ,true);
+        ryu_hook = Bitmap.createScaledBitmap(ryu_hook, width / 5, height /4, true);
+        ryu_upper = Bitmap.createScaledBitmap(ryu_upper, width/5, height / 4, true);
 
 ////////////////////////////////////////////draw pictures /////////////////////////////////////////////////
         canvas.drawColor(Color.BLACK);
         canvas.drawBitmap(bm, 0, 0, null);
-        canvas.drawBitmap(jayg,width - width * 9 / 20,height - height / 3, null);
+        //canvas.drawBitmap(jayg,width - width * 9 / 20,height - height / 3, null);
 
 
         /////////energybar method////////
@@ -158,18 +166,33 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
         }
 
         /////combat opponent
-/*
-        if (action_opponent == 1) {
-            //canvas.drawBitmap(upper_toright,300,500,null);
-            damage_l++;
-        }else if(action_opponent == 2) {
-            //canvas.drawBitmap(hook_toright,300,500,null);
-            damage_l++;
-        }else if (action_opponent == 3) {
-            //canvas.drawBitmap(punch_toright,300,500,null);
-            damage_l++;
+        switch(action_opponent) {
+            case 0:
+                canvas.drawBitmap(ryu_normal, width / 2, height - height / 3, null);
+                break;
+            case 1:
+                canvas.drawBitmap(ryu_hook, width / 2, height - height / 3, null);
+
+                if (PUNCH_DELAY == 0) {
+                    PUNCH_DELAY = 10;
+                }
+                break;
+            case 2:
+                canvas.drawBitmap(ryu_upper, width / 2, height - height / 3, null);
+
+                if (UPPER_DELAY == 0) {
+                    UPPER_DELAY = 10;
+                }
+                break;
+            case 3:
+                canvas.drawBitmap(ryu_kick, width / 2, height - height / 3, null);
+
+                if (HOOK_DELAY == 0) {
+                    HOOK_DELAY = 10;
+                }
+                break;
         }
-*/
+
         mHolder.unlockCanvasAndPost(canvas);
     }
 
