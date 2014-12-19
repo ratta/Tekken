@@ -27,7 +27,7 @@ public class WearActivity extends Activity implements SensorEventListener {
     private final float GAIN = 0.9f;
     private final String TAG = WearActivity.class.getName();
     private String mNode;
-    private final String[] SEND_MESSAGES = {"NOTHING", "PUNCH", "UPPER", "HOOK"};
+    private final String[] SEND_MESSAGES = {"NOTHING", "PUNCH", "UPPER", "HOOK","punch","upper","hook"};
     private int send_delay = 0;
 
     @Override
@@ -147,19 +147,38 @@ public class WearActivity extends Activity implements SensorEventListener {
 
         Log.d(TAG, "s:" + diffX + "/" + diffY + "/" + diffZ + " - " + (int)x + "/" + (int)y + "/" + (int)z);
         if (Math.abs(diffZ) > 20) {
-            Log.d(TAG, "upper!");
-            motion = 2;
             delay = 4;
-            mTextView2.setText("upper");
+            if (Math.abs(diffZ) > 40) {
+                Log.d(TAG, "UPPER!");
+                motion = 2;
+            }
+            else {
+                Log.d(TAG, "upper!");
+                motion = 5;
+            }
+                mTextView2.setText("upper");
         } else if (Math.abs(diffY) > 20) {
-            Log.d(TAG, "hook!");
-            motion = 3;
+
+            if (Math.abs(diffY) > 40){
+                Log.d(TAG, "HOOK!");
+                motion = 3;
+            }
+            else {
+                Log.d(TAG, "hook!");
+                motion = 6;
+            }
             delay = 4;
             mTextView2.setText("hook");
         } else if (diffX > 10) {
             if (delay == 0) {
-                Log.d(TAG, "punch!");
-                motion = 1;
+                if (Math.abs(diffX) > 20)  {
+                    Log.d(TAG, "PUNCH!");
+                    motion = 1;
+                }
+                else {
+                    Log.d(TAG, "punch!");
+                    motion = 4;
+                }
                 mTextView2.setText("punch");
             }
         }

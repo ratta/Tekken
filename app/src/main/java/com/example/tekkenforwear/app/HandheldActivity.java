@@ -93,13 +93,22 @@ public class HandheldActivity extends Activity implements GoogleApiClient.Connec
 //        Log.d(TAG, message);
 
         if (message.equals("PUNCH")){
-            mMainView.punch();
+            mMainView.punch(2);
             mSoundPool.play(mSE_PUNCH,1.0f, 1.0f, 0, 0, 1.0f);
         }else if(message.equals("UPPER")) {
-            mMainView.upper();
+            mMainView.upper(2);
             mSoundPool.play(mSE_UPPER,1.0f, 1.0f, 0, 0, 1.0f);
         }else if(message.equals("HOOK")){
-            mMainView.hook();
+            mMainView.hook(2);
+            mSoundPool.play(mSE_HOOK,1.0f, 1.0f, 0, 0, 1.0f);
+        }else if (message.equals("punch")){
+            mMainView.punch(1);
+            mSoundPool.play(mSE_PUNCH,1.0f, 1.0f, 0, 0, 1.0f);
+        }else if(message.equals("upper")) {
+            mMainView.upper(1);
+            mSoundPool.play(mSE_UPPER,1.0f, 1.0f, 0, 0, 1.0f);
+        }else if(message.equals("hook")){
+            mMainView.hook(1);
             mSoundPool.play(mSE_HOOK,1.0f, 1.0f, 0, 0, 1.0f);
         }
 
