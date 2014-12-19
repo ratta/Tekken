@@ -24,9 +24,12 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
     private final String TAG = "handheld";
     private SurfaceHolder mHolder;
     private Thread mThread;
-    private int PUNCH_DELAY = 0;
-    private int UPPER_DELAY = 0;
-    private int HOOK_DELAY = 0;
+    private int PUNCH_DELAY_MY = 0;
+    private int UPPER_DELAY_MY = 0;
+    private int HOOK_DELAY_MY = 0;
+    private int PUNCH_DELAY_OP = 0;
+    private int UPPER_DELAY_OP = 0;
+    private int HOOK_DELAY_OP = 0;
     private int count_l = 0;
     private int count_r = 0;
     private int status_l = 1;
@@ -144,15 +147,27 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
                 break;
             case 1:
                 canvas.drawBitmap(paul_punch, width / 4, 4 * height / 7, null);
-                PUNCH_DELAY = 10;
+                if (PUNCH_DELAY_MY == 0) {
+                    PUNCH_DELAY_MY = 10;
+                    if (action_opponent == 2) damage_r += 2;
+                    else damage_l += 1;
+                }
                 break;
             case 2:
                 canvas.drawBitmap(paul_upper, width / 4, 4 * height / 7, null);
-                UPPER_DELAY = 10;
+                if (UPPER_DELAY_MY == 0) {
+                    UPPER_DELAY_MY = 10;
+                    if(action_opponent == 3) damage_r += 2;
+                    else damage_l += 1;
+                }
                 break;
             case 3:
                 canvas.drawBitmap(paul_hook, width / 4, 4 * height / 7, null);
-                HOOK_DELAY = 10;
+                if (HOOK_DELAY_MY == 0){
+                    HOOK_DELAY_MY = 10;
+                    if(action_opponent == 1) damage_r += 2;
+                    else damage_l += 1;
+                }
                 break;
         }
 
@@ -163,13 +178,27 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
                 break;
             case 1:
                 canvas.drawBitmap(ryu_hook,11 * width / 20,4 * height / 7, null);
-
+                if (PUNCH_DELAY_OP == 0){
+                    PUNCH_DELAY_OP = 20;
+                    if(action_my == 2) damage_l += 2;
+                    else damage_r += 1;
+                 }
                 break;
             case 2:
                 canvas.drawBitmap(ryu_upper, 11 * width / 20, 4 * height / 7, null);
+                if (UPPER_DELAY_OP == 0) {
+                    UPPER_DELAY_OP = 20;
+                    if(action_my == 3) damage_l += 2;
+                    else damage_r += 1;
+                }
                 break;
             case 3:
                 canvas.drawBitmap(ryu_kick, 11 * width / 20, 4 * height / 7, null);
+                if (HOOK_DELAY_OP == 0) {
+                    HOOK_DELAY_OP = 20;
+                    if(action_my == 1) damage_l += 2;
+                    else damage_r += 1;
+                }
                 break;
         }
 
@@ -199,7 +228,7 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
             if (reset == 0 ){
                 Random generator = new Random();
                 int num;
-                num = generator.nextInt(75) + 1;////random number from 1-3
+                num = generator.nextInt(100) + 1;////random number from 1-3
                 if (num < 4)
                     action_opponent = num ;
            }
@@ -239,16 +268,26 @@ public class MainView extends SurfaceView implements SurfaceHolder.Callback,Runn
 
     public void run(){
         while(mThread != null){
+            //
             random();
             doDraw();
-            if (PUNCH_DELAY > 0) PUNCH_DELAY -= 1;
-            if (UPPER_DELAY > 0)  UPPER_DELAY -= 1;
-            if (HOOK_DELAY > 0)  HOOK_DELAY -= 1;
-            if(PUNCH_DELAY==0 && UPPER_DELAY==0 && HOOK_DELAY==0) {
-                action_my = 0;
-                block_l = 0;
-                block_r = 0;
+            if (PUNCH_DELAY_OP > 0) PUNCH_DELAY_OP -= 1;
+            if (UPPER_DELAY_OP > 0)  UPPER_DELAY_OP -= 1;
+            if (HOOK_DELAY_OP > 0)  HOOK_DELAY_OP -= 1;
+            if(PUNCH_DELAY_OP==0 && UPPER_DELAY_OP==0 && HOOK_DELAY_OP==0) {
+                action_opponent = 0;
             }
+
+            if (PUNCH_DELAY_MY > 0) PUNCH_DELAY_MY -= 1;
+            if (UPPER_DELAY_MY > 0)  UPPER_DELAY_MY -= 1;
+            if (HOOK_DELAY_MY > 0)  HOOK_DELAY_MY -= 1;
+            if(PUNCH_DELAY_MY==0 && UPPER_DELAY_MY==0 && HOOK_DELAY_MY==0) {
+                action_my = 0;
+            }
+
+            //block_l = 0;
+            //block_r = 0;
+
         }
     }
 
